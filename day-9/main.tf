@@ -98,3 +98,4 @@ resource "aws_lb" "name" {
     subnets = [aws_subnet.cust.id,aws_subnet.name.id]
   
 }
+
