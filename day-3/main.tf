@@ -71,44 +71,10 @@ resource "aws_instance" "dev" {
   
 }
 
-resource "aws_eip" "elp" {
-  network_border_group = "ap-south-1"
-  instance = aws_instance.dev.id
-  domain = "vpc"
-}
-
-resource "aws_nat_gateway" "ng" {
-  connectivity_type = "public"
-  subnet_id = aws_subnet.public.id
-  allocation_id = aws_eip.elp.id
-}
 
 
 
 
 
-resource "aws_lb_target_group" "tg" {
-    name = "targetgroup"
-    protocol = "HTTP"
-  port = 80
-  target_type = "instance"
-  vpc_id = "aws_vpc"
-  tags = {
-    name ="mytg"
-  }
-  
-  
-}
 
-resource "aws_lb" "name" {
-    name = "loadbalancer"
-    internal = "false"
-    load_balancer_type = "application"
-    
-    security_groups = [aws_security_group.sg.id]
-    subnets = [aws_subnet.public.id, aws_subnet.private.id]
-    depends_on = [aws_lb_target_group.tg]
-    tags = {
-      name ="myalb"
-    }
-}
+
